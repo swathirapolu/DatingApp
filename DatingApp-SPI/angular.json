@@ -3,7 +3,8 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "DatingApp-SPI":{
+    "DatingApp-SPI":
+    {
       "projectType": "application",
       "schematics": {},
       "root": "",

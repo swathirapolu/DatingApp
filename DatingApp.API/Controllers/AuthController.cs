@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Http;
 
 namespace DatingApp.API.Controllers
 
@@ -43,6 +44,9 @@ namespace DatingApp.API.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(UserforLoginDto userforLoginDto)
         {
+        
+            //throw new Exception("Computer says no!!");
+            
             var userfromRepo = await _repo.Login(userforLoginDto.Username.ToLower(), userforLoginDto.Password);
             if (userfromRepo is null)
                 return Unauthorized();
@@ -65,8 +69,6 @@ namespace DatingApp.API.Controllers
             }
 
             );
-
-
-        }
+            }
     }
 }
