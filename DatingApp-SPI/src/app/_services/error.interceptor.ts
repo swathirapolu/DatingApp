@@ -13,6 +13,7 @@ import { catchError } from 'rxjs/operators';
 import { error } from 'protractor';
 // import { Observable } from 'rxjs';
 
+@Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   intercept(
     req: import('@angular/common/http').HttpRequest<any>,
