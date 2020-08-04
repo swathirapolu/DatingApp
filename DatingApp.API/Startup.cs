@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.Http;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using DatingApp.API.Helpers;
+using AutoMapper;
 
 namespace DatingApp.API
 {
@@ -36,9 +37,19 @@ namespace DatingApp.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatingApp.Data.DataContext>(x=>x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
-            services.AddCors();         
+            // services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+            //     .AddJsonOptions(opt => {
+            //         opt.SerializerSettings.ReferenceLoopHandling= Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            //     });
+            services.AddControllers().AddNewtonsoftJson(opt =>
+            {
+                opt.SerializerSettings.ReferenceLoopHandling=
+                Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
+            services.AddCors();      
+            services.AddAutoMapper(typeof(DatingRepository).Assembly);  
             services.AddScoped<IAuthRepository,AuthRepository>();
+            services.AddScoped<IDatingRepository,DatingRepository>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options => {
                 options.TokenValidationParameters= new Microsoft.IdentityModel.Tokens.TokenValidationParameters{
